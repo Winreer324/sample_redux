@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flutter_sample.flutter_sample">
+    package="com.flutter_sample_redux.flutter_sample_redux">
    <application
-        android:label="flutter_sample"
+        android:label="flutter_sample_redux"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

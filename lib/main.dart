@@ -1,37 +1,19 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'di/injection.dart';
+import 'navigation.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Redux',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
+  await setInjections();
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: const SizedBox(),
-    );
-  }
+  runZonedGuarded(() {
+    runApp(const NavigationApp());
+  }, (error, stackTrace) {
+    log(error.toString(), name: 'error', stackTrace: stackTrace);
+  });
 }

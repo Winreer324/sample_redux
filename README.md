@@ -1,4 +1,4 @@
-# flutter_sample
+# flutter_sample_redux
 
 A new Flutter project.
 
