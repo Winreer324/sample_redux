@@ -6,8 +6,8 @@ import 'package:flutter_sample_redux/shopping_list/list/shopping_list.dart';
 import 'package:flutter_sample_redux/shopping_list/model/shopping_state.dart';
 import 'package:flutter_sample_redux/shopping_list/redux/actions.dart';
 
-class ShoppingCartApp extends StatelessWidget {
-  const ShoppingCartApp({Key? key}) : super(key: key);
+class ShoppingCartScreen extends StatelessWidget {
+  const ShoppingCartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class ShoppingCart extends StatelessWidget {
         onPressed: () => _openAddItemDialog(context),
         child: const Icon(Icons.add),
       ),
-      bottomSheet: BottomCartBar(),
+      bottomSheet: const BottomCartBar(),
       endDrawer: Container(
         width: 240.0,
         color: Colors.white,

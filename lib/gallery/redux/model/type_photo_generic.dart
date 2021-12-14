@@ -1,0 +1,2 @@
+class NewTypePhotoGeneric {}
+class PopularTypePhotoGeneric {}

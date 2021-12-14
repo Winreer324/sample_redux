@@ -9,6 +9,9 @@ import 'package:flutter_sample_redux/shopping_list/widgets/shopping_cart_app.dar
 import 'counter/couter_screen.dart';
 import 'counter/model/counter_state.dart';
 import 'di/injection.dart';
+import 'gallery/constants/api_constants.dart';
+import 'gallery/gallery_screen.dart';
+import 'gallery/redux/gallery_state.dart';
 import 'shopping_list/widgets/shopping_cart_app.dart';
 
 class NavigationApp extends StatefulWidget {
@@ -19,10 +22,8 @@ class NavigationApp extends StatefulWidget {
 }
 
 class _NavigationState extends State<NavigationApp> {
+  final GlobalKey<NavigatorState> navigatorKey = ApiConstants.alice.getNavigatorKey()!;
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-  // late List<Widget> _widgetOptions;
 
   final StreamController<List<Widget>> _streamController = StreamController();
 
@@ -38,16 +39,10 @@ class _NavigationState extends State<NavigationApp> {
 
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       _streamController.add([
+        const GalleryScreen(),
         CounterScreen(counterState: injection()),
-        const ShoppingCartApp(),
+        const ShoppingCartScreen(),
       ]);
-      // _widgetOptions = <Widget>[
-      //   ShoppingCartApp(widget.store),
-      //   const Text(
-      //     'counter',
-      //     style: optionStyle,
-      //   ),
-      // ];
     });
   }
 
@@ -59,15 +54,17 @@ class _NavigationState extends State<NavigationApp> {
 
   @override
   Widget build(BuildContext context) {
+    ApiConstants.alice.setNavigatorKey(navigatorKey);
     return StoreProvider<CounterState>(
       store: injection(),
       child: StoreProvider<ShoppingState>(
         store: injection(),
         child: MaterialApp(
-          title: 'ShoppingList',
+          title: 'Flutter redux samples',
           theme: ThemeData(
             primarySwatch: Colors.blueGrey,
           ),
+          navigatorKey: navigatorKey,
           home: StoreBuilder<ShoppingState>(
             onInit: (store) => store.dispatch(FetchItemsAction()),
             builder: (context, store) => Scaffold(
@@ -85,6 +82,11 @@ class _NavigationState extends State<NavigationApp> {
               ),
               bottomNavigationBar: BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.accessible_forward),
+                    label: 'Gallery',
+                    backgroundColor: Colors.blueGrey,
+                  ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.business),
                     label: 'Counter',
