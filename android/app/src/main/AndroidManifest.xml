@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flutter_sample_redux.flutter_sample_redux">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="flutter_sample_redux"
         android:icon="@mipmap/ic_launcher">
