@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_sample_redux/di/injection.dart';
 import 'package:flutter_sample_redux/gallery/enum/type_photo.dart';
-import 'package:flutter_sample_redux/gallery/redux/actions.dart';
-import 'package:flutter_sample_redux/gallery/redux/gallery_state.dart';
+import 'package:flutter_sample_redux/gallery/redux/actions/actions.dart';
 import 'package:flutter_sample_redux/gallery/redux/model/type_photo_generic.dart';
+import 'package:flutter_sample_redux/gallery/redux/state/gallery_state.dart';
 import 'package:redux/redux.dart';
 
 import 'widgets/animation_loader.dart';
+import 'widgets/gallery_app_bar.dart';
 import 'widgets/pagination_widget.dart';
 import 'widgets/photo_list.dart';
 import 'widgets/progress_indicatior.dart';
@@ -22,32 +23,21 @@ class GalleryScreen extends StatefulWidget {
   _GalleryScreenState createState() => _GalleryScreenState();
 }
 
-class _GalleryScreenState extends State<GalleryScreen>  {
+class _GalleryScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Gallery'),
-          automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xff5808e5),
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(text: 'New'),
-              Tab(text: 'Popular'),
-            ],
-          ),
-        ),
+        appBar: const GalleryAppBar(title: 'Gallery'),
         body: TabBarView(
           children: [
-            GalleryWidget<NewTypePhotoGeneric>(
+            _GalleryWidget<NewTypePhotoGeneric>(
               typePhoto: TypePhoto.newPhoto,
               scrollController: ScrollController(),
               key: const ObjectKey(TypePhoto.newPhoto),
             ),
-            GalleryWidget<PopularTypePhotoGeneric>(
+            _GalleryWidget<PopularTypePhotoGeneric>(
               typePhoto: TypePhoto.popularPhoto,
               scrollController: ScrollController(),
               key: const ObjectKey(TypePhoto.popularPhoto),
@@ -57,22 +47,22 @@ class _GalleryScreenState extends State<GalleryScreen>  {
       ),
     );
   }
-
 }
 
-class GalleryWidget<T> extends StatefulWidget {
+class _GalleryWidget<T> extends StatefulWidget {
   final TypePhoto typePhoto;
   final ScrollController scrollController;
 
-  const GalleryWidget({Key? key, required this.typePhoto, required this.scrollController}) : super(key: key);
+  const _GalleryWidget({Key? key, required this.typePhoto, required this.scrollController}) : super(key: key);
 
   @override
   _GalleryWidgetState<T> createState() => _GalleryWidgetState<T>();
 }
 
-class _GalleryWidgetState<T> extends State<GalleryWidget> with AutomaticKeepAliveClientMixin<GalleryWidget> {
+class _GalleryWidgetState<T> extends State<_GalleryWidget> with AutomaticKeepAliveClientMixin<_GalleryWidget> {
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<GalleryState<T>>(
@@ -82,7 +72,6 @@ class _GalleryWidgetState<T> extends State<GalleryWidget> with AutomaticKeepAliv
           children: [
             StoreBuilder<GalleryState<T>>(
               onInit: (store) => store.dispatch(FistLoadingAction(widget.typePhoto)),
-              // onInitialBuild:  (store) => store.dispatch(FistLoadingAction(widget.typePhoto)),
               builder: (context, store) {
                 log(store.state.toString());
                 if (store.state.isLoading) {
@@ -120,7 +109,7 @@ class _GalleryWidgetState<T> extends State<GalleryWidget> with AutomaticKeepAliv
                           },
                           child: PhotoList(
                             photos: store.state.photos,
-                            scrollController:widget.scrollController,
+                            scrollController: widget.scrollController,
                           ),
                         ),
                       );

@@ -8,10 +8,5 @@ Future<Store<CounterState>> createCounterReduxStore() async {
   return DevToolsStore<CounterState>(
     appCounterStateReducers,
     initialState: CounterState.empty(),
-    middleware: [
-      // ApiMiddleware(apiClient),
-      // PrefsMiddleware(sharedPreferences),
-      // LoggingMiddleware(),
-    ],
   );
 }

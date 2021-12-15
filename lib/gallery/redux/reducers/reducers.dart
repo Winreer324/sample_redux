@@ -1,7 +1,7 @@
 import 'package:flutter_sample_redux/gallery/redux/model/photo_entity.dart';
 
-import 'actions.dart';
-import 'gallery_state.dart';
+import '../actions/actions.dart';
+import '../state/gallery_state.dart';
 
 GalleryState<PhotoGeneric> appGalleryStateReducers<PhotoGeneric>(GalleryState<PhotoGeneric> state, dynamic action) {
   if (action is AddAllPhotosAction) {

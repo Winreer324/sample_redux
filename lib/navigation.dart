@@ -11,7 +11,7 @@ import 'counter/model/counter_state.dart';
 import 'di/injection.dart';
 import 'gallery/constants/api_constants.dart';
 import 'gallery/gallery_screen.dart';
-import 'gallery/redux/gallery_state.dart';
+import 'gallery_built/gallery_built_screen.dart';
 import 'shopping_list/widgets/shopping_cart_app.dart';
 
 class NavigationApp extends StatefulWidget {
@@ -39,6 +39,7 @@ class _NavigationState extends State<NavigationApp> {
 
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
       _streamController.add([
+        const GalleryBuiltScreen(),
         const GalleryScreen(),
         CounterScreen(counterState: injection()),
         const ShoppingCartScreen(),
@@ -55,7 +56,11 @@ class _NavigationState extends State<NavigationApp> {
   @override
   Widget build(BuildContext context) {
     ApiConstants.alice.setNavigatorKey(navigatorKey);
-    return StoreProvider<CounterState>(
+    return
+        // ReduxProvider(
+        // store: injection<built_redux.Store<GalleryStateBuilt, GalleryStateBuiltBuilder, GalleryBuildActions>>(),
+        // child:
+        StoreProvider<CounterState>(
       store: injection(),
       child: StoreProvider<ShoppingState>(
         store: injection(),
@@ -83,6 +88,11 @@ class _NavigationState extends State<NavigationApp> {
               bottomNavigationBar: BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
+                    icon: Icon(Icons.accessible),
+                    label: 'Gallery Built',
+                    backgroundColor: Colors.blue,
+                  ),
+                  BottomNavigationBarItem(
                     icon: Icon(Icons.accessible_forward),
                     label: 'Gallery',
                     backgroundColor: Colors.blueGrey,
@@ -99,7 +109,8 @@ class _NavigationState extends State<NavigationApp> {
                   ),
                 ],
                 currentIndex: _selectedIndex,
-                selectedItemColor: Colors.amber[800],
+                // selectedItemColor: Colors.amber[800],
+                selectedItemColor: Colors.black,
                 onTap: _onItemTapped,
               ),
             ),
@@ -107,5 +118,7 @@ class _NavigationState extends State<NavigationApp> {
         ),
       ),
     );
+    // ),
+    // );
   }
 }
