@@ -1,11 +1,11 @@
 import 'package:flutter_sample_redux/gallery/enum/type_photo.dart';
-import 'package:flutter_sample_redux/gallery/redux/actions.dart';
+import 'package:flutter_sample_redux/gallery/redux/actions/actions.dart';
 import 'package:flutter_sample_redux/gallery/repository/photo_repository.dart';
 import 'package:redux/redux.dart';
 
-import 'gallery_state.dart';
-import 'model/pagination_response.dart';
-import 'model/photo_entity.dart';
+import '../state/gallery_state.dart';
+import '../model/pagination_response.dart';
+import '../model/photo_entity.dart';
 
 class ApiGalleryMiddleware<PhotoGeneric> extends MiddlewareClass<GalleryState> {
   final PhotoRepository photoRepository;

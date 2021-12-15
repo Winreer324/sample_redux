@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_sample_redux/gallery/redux/gallery_state.dart';
+import 'package:flutter_sample_redux/gallery/redux/state/gallery_state.dart';
 import 'package:flutter_sample_redux/gallery/resources/resources.dart';
 import 'package:flutter_sample_redux/gallery/widgets/animation_loader.dart';
 import 'package:flutter_sample_redux/gallery/widgets/custom_refresh_indicator.dart';
